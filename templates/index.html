@@ -2,6 +2,7 @@
 
 <html lang="en">
 	<head>
+		<meta charset="utf-8"name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.0.0/magnific-popup.min.css">
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -13,6 +14,41 @@
 
 	<body>
 		<h1>For these journalists, news was a matter of life and death. </h1>
+
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<tr>
+					<th>Name</th>
+					<th>Date</th>
+					<th>Organization</th>
+					<th>Beat</th>
+					<th>Alleged killer</th>
+					<th>Death</th>
+					<th>Place</th>
+					<th>State</th>
+					<th>Report</th>
+				</tr>
+				{% for obj in object_list %}
+				<tr>
+					<td>{{ obj.name }}</td>
+					<td>{{ obj.date }}</td>
+					<td>{{ obj.organization }}</td>
+					<td>{{ obj.beat }}</td>
+					<td>{{ obj.alleged_killer }}</td>
+					<td>{{ obj.death_type }}</td>
+					<td>{{ obj.place }}</td>
+					<td>{{ obj.state }}</td>
+					<td>{{ obj.description }}</td>
+				</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+
+
+
+
+		
 	</body>
 </html>
 	

@@ -3,52 +3,106 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8"name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.0.0/magnific-popup.min.css">
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.0.0/jquery.magnific-popup.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" href="./static/css/facebox.css">
+		 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+		<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+		
+		<script src="./static/js/facebox.js"></script>
 
 		<title> Journalist deaths in India </title>
 	</head>
 
 
 	<body>
-		<h1>For these journalists, news was a matter of life and death. </h1>
+		<div class="container">
+			<div id="map" style="width:100%; height:300px;"></div>			
 
-		<div class="table-responsive">
-			<table class="table table-hover">
-				<tr>
-					<th>Name</th>
-					<th>Date</th>
-					<th>Organization</th>
-					<th>Beat</th>
-					<th>Alleged killer</th>
-					<th>Death</th>
-					<th>Place</th>
-					<th>State</th>
-					<th>Report</th>
-				</tr>
-				{% for obj in object_list %}
-				<tr>
-					<td>{{ obj.name }}</td>
-					<td>{{ obj.date }}</td>
-					<td>{{ obj.organization }}</td>
-					<td>{{ obj.beat }}</td>
-					<td>{{ obj.alleged_killer }}</td>
-					<td>{{ obj.death_type }}</td>
-					<td>{{ obj.place }}</td>
-					<td>{{ obj.state }}</td>
-					<td>{{ obj.description }}</td>
-				</tr>
-				{% endfor %}
+			<h1>For these Indian journalists, news was a matter of life and death. </h1>
+								
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<tr>
+							<th>Name</th>
+							<th>Date</th>
+							<th>Organization</th>
+							<th>Beat</th>
+							<th>Alleged killer</th>
+							<th>Death</th>
+							<th>Place</th>
+							<th>State</th>
+							<th>Report</th>
+						</tr>
+						{% for obj in object_list %}
+						<tr id="{{ obj.name }}">
+							<td>{{ obj.name }}</td>
+							<td>{{ obj.date }}</td>
+							<td>{{ obj.organization }}</td>
+							<td>{{ obj.beat }}</td>
+							<td>{{ obj.alleged_killer }}</td>
+							<td>{{ obj.death_type }}</td>
+							<td>{{ obj.place }}</td>
+							<td>{{ obj.state }}</td>
+							<td>{{ obj.description }}</td>
+						</tr>
+						{% endfor %}
 
-			</table>
-		</div>
+					</table>
+				</div>
+				
+			</div>
+		<script type='text/javascript'>			
 
+			//window.onLoad = function() {
 
+			$(document).ready(function() {			
 
+			var map = L.map('map').setView([21, 78], 4);
 
-		
+			var mapquestLayer = new L.TileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: 'Data, imagery and map information provided by <a href="http://open.mapquest.co.uk" target="_blank">MapQuest</a>,<a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors.',
+                subdomains: ['otile1','otile2','otile3','otile4']
+            });
+            map.addLayer(mapquestLayer);
+
+            var data = {
+            	"type": "FeatureCollection",
+            	"features": [
+            	{% for obj in object_list %}
+	            	{
+	            		"type": "Feature",
+	            		"properties": {
+	            			"full_name": "{{ obj.name }}" ,
+	            			"id": "{{ obj.id }}",
+	            			"alleged_killer": "{{ obj.alleged_killer }}",
+	            			"death": "{{ obj.death }}",
+	            			"death_type": "{{ obj.death_type }}",
+	            			"report": "{{ obj.description }}"
+	            		},
+	            		"geometry": {
+	            			"type": "Point",
+	            			"coordinates": [{{ obj.longitude }}, {{ obj.latitude }}]
+	            		}
+
+	            	} {% if not loop.last %},{% endif %}
+	            	{% endfor %}
+            	]
+            };
+
+            //var display = "<a onclick"
+
+            var dataLayer = L.geoJson(data, {
+                onEachFeature: function(feature, layer) {
+                    layer.bindPopup('<strong>' + feature.properties.full_name + '</strong>' + '<br> Died: ' + feature.properties.death + '<br> Alleged killer: ' + feature.properties.alleged_killer + '<br>'
+                    	+ '<a onclick="jQuery.facebox(feature.properties.report)">' + 'Details</a>');
+                }
+            });
+            map.addLayer(dataLayer);
+        });
+
+		</script>		
 	</body>
 </html>
 	

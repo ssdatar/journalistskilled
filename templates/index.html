@@ -10,14 +10,19 @@
 		<style>
 			body {
 				font-family: 'Lato', helvetica, serif;
+				background: #e9e9e9;
+			}
+
+			table {
+				margin: 20px;
+			}
+
+			td {
+				color: #696969;
 			}
 
 			span {
 				font-size: 15px;
-			}
-
-			h1 {
-				font-size: 40px;
 			}
 
 			#map {
@@ -42,7 +47,11 @@
 
 			@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) { 
 
-			.container h1 {
+			.page-header h1 {
+				font-size: 25px;
+			}
+
+			p span {
 				font-size: 15px;
 			}
 
@@ -76,7 +85,31 @@
 			}
 			}
 			@media (min-width:481px) { 
-				/* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ 
+				/* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+
+			#map {
+				margin: 5px 5px 5px 0;
+				height: 300px;
+				width: 75%;
+			}
+
+			#info {
+				font-family: 'Lato', helvetica, serif;
+				color: black;
+				font-size: 8px;
+				margin: 5px;
+				background: #f7f7f7;
+				float: right;
+				width: 20%;
+				height: 300px;
+				overflow: auto;
+				padding: 5px;
+				text-align: center;
+				}
+
+			span {
+				font-size: 12px;
+			} 
 
 				}
 
@@ -123,6 +156,10 @@
 				padding: 15px;
 				}
 
+			h1 {
+				font-size: 60px;
+			}
+
 			}
 			
 			@media (min-width:1025px) { 
@@ -147,6 +184,10 @@
 				overflow: auto;
 				padding: 15px;
 				}
+
+			h1 {
+				font-size: 60px;
+			}
 
 			/* Force OS X to show scrollbar: http://stackoverflow.com/questions/7492062/css-overflow-scroll-always-show-vertical-scroll-bar;*/
 

@@ -1,109 +1,306 @@
 <!DOCTYPE html>
-
 <html lang="en">
 	<head>
 		<meta charset="utf-8"name="viewport" content="width=device-width, initial-scale=1">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-		<link rel="stylesheet" href="./static/css/facebox.css">
-		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
-		<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css"/>
+		<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 		
-		<script src="./static/js/facebox.js"></script>
+		<title>Journalist deaths in India</title>
+		<style>
+			body {
+				font-family: 'Lato', helvetica, serif;
+			}
 
-		<title> Journalist deaths in India </title>
+			span {
+				font-size: 15px;
+			}
+
+			h1 {
+				font-size: 40px;
+			}
+
+			#map {
+				margin: 10px;
+				height: 500px;
+				width: 75%;
+				border: solid #545454 1px;
+			}
+			
+			#info {
+				color: black;
+				margin: 8px;
+				background: #f7f7f7;
+				float: right;
+				width: 20%;
+				height: 500px;
+				overflow: auto;
+				padding: 15px;
+				text-align: center;
+				clear: both;
+			}
+
+			@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) { 
+
+			.container h1 {
+				font-size: 15px;
+			}
+
+			td {
+				font-size: 10px;
+			}
+
+			th {
+				font-size: 12px;
+			}
+
+			#map {
+				margin: 5px 5px 5px 0;
+				height: 300px;
+				width: 75%;
+			}
+
+			#info {
+				font-family: 'Lato', helvetica, serif;
+				color: black;
+				font-size: 8px;
+				margin: 5px;
+				background: #f7f7f7;
+				float: right;
+				width: 20%;
+				height: 300px;
+				overflow: auto;
+				padding: 5px;
+				text-align: center;
+				}
+			}
+			}
+			@media (min-width:481px) { 
+				/* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ 
+
+				}
+
+			@media (min-width:641px) { 
+			/* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ 
+
+			#map {
+				margin: 10px;
+				height: 500px;
+				width: 75%;
+				}
+			
+			#info {
+				font-family: 'Lato', helvetica, serif;
+				color: black;
+				margin: 10px;
+				background: #f7f7f7;
+				float: right;
+				width: 20%;
+				height: 500px;
+				overflow: auto;
+				padding: 15px;
+				}
+			}
+
+			@media (min-width:961px) { 
+			/* tablet, landscape iPad, lo-res laptops ands desktops */ 
+
+			#map {
+				margin: 10px;
+				height: 500px;
+				width: 75%;
+				}
+			
+			#info {
+				font-family: 'Lato', helvetica, serif;
+				color: black;
+				margin: 10px;
+				background: #f7f7f7;
+				float: right;
+				width: 20%;
+				height: 500px;
+				overflow: auto;
+				padding: 15px;
+				}
+
+			}
+			
+			@media (min-width:1025px) { 
+			/* big landscape tablets, laptops, and desktops */ 
+
+			#map {
+				margin: 10px;
+				height: 500px;
+				width: 75%;
+				}
+			
+			#info {
+				font-family: 'Lato', helvetica, serif;
+				border: solid 1px;
+				border-color: #545454;
+				color: black;
+				margin: 10px;
+				background: #f7f7f7;
+				float: right;
+				width: 20%;
+				height: 500px;
+				overflow: auto;
+				padding: 15px;
+				}
+
+			/* Force OS X to show scrollbar: http://stackoverflow.com/questions/7492062/css-overflow-scroll-always-show-vertical-scroll-bar;*/
+
+			::-webkit-scrollbar {
+			  -webkit-appearance: none;
+			  width: 7px;
+			}
+			::-webkit-scrollbar-thumb {
+			  border-radius: 4px;
+			  background-color: rgba(0, 0, 0, .5);
+			  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+			}
+			}
+
+			@media (min-width:1281px) { 
+			/* hi-res laptops and desktops */ 
+			#map {
+				margin: 10px;
+				height: 500px;
+				width: 75%;
+				}
+			
+			#info {
+				font-family: 'Lato', helvetica, serif;
+				border: solid 1px;
+				border-color: #545454;
+				color: black;
+				margin: 10px;
+				background: #f7f7f7;
+				float: right;
+				width: 20%;
+				height: 500px;
+				overflow: auto;
+				padding: 15px;
+				}
+
+			::-webkit-scrollbar {
+			  -webkit-appearance: none;
+			  width: 7px;
+			}
+			::-webkit-scrollbar-thumb {
+			  border-radius: 4px;
+			  background-color: rgba(0, 0, 0, .5);
+			  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+				}
+			}
+		</style>
 	</head>
-
 
 	<body>
 		<div class="container">
-			<div id="map" style="width:100%; height:300px;"></div>			
+			<div class="page-header">
+				<h1 class="text-center">Journalists killed in India </h1>
+			
+				<p> <span> According to the Committee to Protect of Journalists, 37 journalists have been killed in India since 1992, while they were performing their duties. This map shows where they were killed, the alleged killers, and the reason for death. Click on the markers on the map to know more details. </span></p>
 
-			<h1>For these Indian journalists, news was a matter of life and death. </h1>
-								
-				<div class="table-responsive">
-					<table class="table table-hover">
-						<tr>
-							<th>Name</th>
-							<th>Date</th>
-							<th>Organization</th>
-							<th>Beat</th>
-							<th>Alleged killer</th>
-							<th>Death</th>
-							<th>Place</th>
-							<th>State</th>
-							<th>Report</th>
-						</tr>
-						{% for obj in object_list %}
-						<tr id="{{ obj.name }}">
-							<td>{{ obj.name }}</td>
-							<td>{{ obj.date }}</td>
-							<td>{{ obj.organization }}</td>
-							<td>{{ obj.beat }}</td>
-							<td>{{ obj.alleged_killer }}</td>
-							<td>{{ obj.death_type }}</td>
-							<td>{{ obj.place }}</td>
-							<td>{{ obj.state }}</td>
-							<td>{{ obj.description }}</td>
-						</tr>
-						{% endfor %}
-
-					</table>
-				</div>
-				
+				<p> Source: <a href="https://www.cpj.org/killed/asia/india">Committee to Protect Journalists</a></p>
+				<small> Disclaimer: Locations are not exact since there is no record of exact latitudes and longitudes. Geocoding is according to the names of towns and villages in the data. </small>
 			</div>
-		<script type='text/javascript'>	
+				
+			<div class="row">
+				<div id="info"></div>
+				<div id="map"></div>
+				<!-- Create the table using data-->
 
+					<div class="table-responsive">
+						<table class="table table-hover">
+							<tr>
+								<th>Name</th>
+								<th>Date</th>
+								<th>Organization</th>
+								<th>Beat</th>
+								<th>Alleged killer</th>
+								<th>Place</th>
+								<th>State</th>
+							</tr>
+							{% for obj in object_list %}
+							<tr id="{{ obj.name }}">
+								<td>{{ obj.name }}</td>
+								<td>{{ obj.date }}</td>
+								<td>{{ obj.organization }}</td>
+								<td>{{ obj.beat }}</td>
+								<td>{{ obj.alleged_killer }}</td>
+								<td>{{ obj.place }}</td>
+								<td>{{ obj.state }}</td>
+							</tr>
+							{% endfor %}
+						</table>
+					</div>					
+				</div>
+			</div>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+			<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+			<script type='text/javascript'>	
 
-			//window.onLoad = function() {
+				//Load when document is ready
+				$(document).ready(function() {	
 
-			$(document).ready(function() {			
+				//hide till a marker is clicked
+				$('#info').css('display', 'none')
+				$('#map').css('width', '100%');	// occupy full screen space	
 
-			var map = L.map('map').setView([21, 78], 4);
+				var map = L.map('map').setView([21, 78], 4);
 
-			var mapquestLayer = new L.TileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
-                maxZoom: 18,
-                attribution: 'Data, imagery and map information provided by <a href="http://open.mapquest.co.uk" target="_blank">MapQuest</a>,<a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors.',
-                subdomains: ['otile1','otile2','otile3','otile4']
-            });
-            map.addLayer(mapquestLayer);
+				var mapquestLayer = new L.TileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
+	                maxZoom: 18,
+	                attribution: 'Data, imagery and map information provided by <a href="http://open.mapquest.co.uk" target="_blank">MapQuest</a>,<a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors.',
+	                subdomains: ['otile1','otile2','otile3','otile4']
+	            });
+	            map.addLayer(mapquestLayer);
 
-            var data = {
-            	"type": "FeatureCollection",
-            	"features": [
-            	{% for obj in object_list %}
-	            	{
-	            		"type": "Feature",
-	            		"properties": {
-	            			"full_name": "{{ obj.name }}" ,
-	            			"id": "{{ obj.id }}",
-	            			"alleged_killer": "{{ obj.alleged_killer }}",
-	            			"death": "{{ obj.death }}",
-	            			"death_type": "{{ obj.death_type }}",
-	            			"report": "{{ obj.description }}"
-	            		},
-	            		"geometry": {
-	            			"type": "Point",
-	            			"coordinates": [{{ obj.longitude }}, {{ obj.latitude }}]
-	            		}
+	            //GeoJSON with data taken from CSV
+	            var data = {
+	            	"type": "FeatureCollection",
+	            	"features": [
+	            	{% for obj in object_list %}
+		            	{
+		            		"type": "Feature",
+		            		"properties": {
+		            			"full_name": "{{ obj.name }}" ,
+		            			"id": "{{ obj.id }}",
+		            			"alleged_killer": "{{ obj.alleged_killer }}",
+		            			"death": "{{ obj.death }}",
+		            			"death_type": "{{ obj.death_type }}",
+		            			"report": "{{ obj.description }}"
+		            		},
+		            		"geometry": {
+		            			"type": "Point",
+		            			"coordinates": [{{ obj.longitude }}, {{ obj.latitude }}]
+		            		}
 
-	            	} {% if not loop.last %},{% endif %}
-	            	{% endfor %}
-            	]
-            };
+		            	} {% if not loop.last %},{% endif %}
+		            	{% endfor %}
+	            	]
+	            };            
 
-            //var display = "<a onclick"
+	            //Show data on map
+	            var dataLayer = L.geoJson(data, {
+	                onEachFeature: function(feature, layer) {
 
-            var dataLayer = L.geoJson(data, {
-                onEachFeature: function(feature, layer) {
-                    layer.bindPopup('<strong>' + feature.properties.full_name + '</strong>' + '<br> Died: ' + feature.properties.death + '<br> Alleged killer: ' + feature.properties.alleged_killer + '<br>'
-                    	+ "<a onclick='jQuery.facebox(feature.properties.report)'>" + 'Details</a>');
-                }
-            });
-            map.addLayer(dataLayer);
-        });
-
+	                	//When marker is clicked, show info panel on the side
+	                	layer.on('click', function(event) {
+	                		$('#map').css('width', '75%');
+	                		$('#info').css('display', 'block')
+	                				.animate({'width': '20%'}, '1000')
+	                				.html(feature.properties.report);
+	                	});
+	                	
+	                	//Info shown on map popup
+	                	layer.bindPopup('<strong>' + feature.properties.full_name + '</strong>' + '<br> Died: ' + feature.properties.death + '<br> Alleged killer: ' + feature.properties.alleged_killer + '<br>');
+	                }
+	            });
+	            map.addLayer(dataLayer);
+	        });
 		</script>		
 	</body>
 </html>
-	

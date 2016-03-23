@@ -1,240 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8"name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+
+		<!--Bootstrap stylesheet-->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" />
+
+		<!--Main stylesheet-->
+		<link rel="stylesheet" href="style.css" />
+
+		<!--Leaflet stylesheet-->
 		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css"/>
+
+		<!--Google font Lato -->
 		<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 		
 		<title>Journalist deaths in India</title>
-		<style>
-			body {
-				font-family: 'Lato', helvetica, serif;
-				background: #e9e9e9;
-			}
-
-			table {
-				margin: 20px;
-			}
-
-			td {
-				color: #696969;
-			}
-
-			span {
-				font-size: 15px;
-			}
-
-			#map {
-				margin: 10px;
-				height: 500px;
-				width: 75%;
-				border: solid #545454 1px;
-			}
-			
-			#info {
-				color: black;
-				margin: 8px;
-				background: #f7f7f7;
-				float: right;
-				width: 20%;
-				height: 500px;
-				overflow: auto;
-				padding: 15px;
-				text-align: center;
-				clear: both;
-			}
-
-			@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) { 
-
-			.page-header h1 {
-				font-size: 25px;
-			}
-
-			p span {
-				font-size: 15px;
-			}
-
-			td {
-				font-size: 10px;
-			}
-
-			th {
-				font-size: 12px;
-			}
-
-			#map {
-				margin: 5px 5px 5px 0;
-				height: 300px;
-				width: 75%;
-			}
-
-			#info {
-				font-family: 'Lato', helvetica, serif;
-				color: black;
-				font-size: 8px;
-				margin: 5px;
-				background: #f7f7f7;
-				float: right;
-				width: 20%;
-				height: 300px;
-				overflow: auto;
-				padding: 5px;
-				text-align: center;
-				}
-			}
-			}
-			@media (min-width:481px) { 
-				/* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
-
-			#map {
-				margin: 5px 5px 5px 0;
-				height: 300px;
-				width: 75%;
-			}
-
-			#info {
-				font-family: 'Lato', helvetica, serif;
-				color: black;
-				font-size: 8px;
-				margin: 5px;
-				background: #f7f7f7;
-				float: right;
-				width: 20%;
-				height: 300px;
-				overflow: auto;
-				padding: 5px;
-				text-align: center;
-				}
-
-			span {
-				font-size: 12px;
-			} 
-
-				}
-
-			@media (min-width:641px) { 
-			/* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ 
-
-			#map {
-				margin: 10px;
-				height: 500px;
-				width: 75%;
-				}
-			
-			#info {
-				font-family: 'Lato', helvetica, serif;
-				color: black;
-				margin: 10px;
-				background: #f7f7f7;
-				float: right;
-				width: 20%;
-				height: 500px;
-				overflow: auto;
-				padding: 15px;
-				}
-			}
-
-			@media (min-width:961px) { 
-			/* tablet, landscape iPad, lo-res laptops ands desktops */ 
-
-			#map {
-				margin: 10px;
-				height: 500px;
-				width: 75%;
-				}
-			
-			#info {
-				font-family: 'Lato', helvetica, serif;
-				color: black;
-				margin: 10px;
-				background: #f7f7f7;
-				float: right;
-				width: 20%;
-				height: 500px;
-				overflow: auto;
-				padding: 15px;
-				}
-
-			h1 {
-				font-size: 60px;
-			}
-
-			}
-			
-			@media (min-width:1025px) { 
-			/* big landscape tablets, laptops, and desktops */ 
-
-			#map {
-				margin: 10px;
-				height: 500px;
-				width: 75%;
-				}
-			
-			#info {
-				font-family: 'Lato', helvetica, serif;
-				border: solid 1px;
-				border-color: #545454;
-				color: black;
-				margin: 10px;
-				background: #f7f7f7;
-				float: right;
-				width: 20%;
-				height: 500px;
-				overflow: auto;
-				padding: 15px;
-				}
-
-			h1 {
-				font-size: 60px;
-			}
-
-			/* Force OS X to show scrollbar: http://stackoverflow.com/questions/7492062/css-overflow-scroll-always-show-vertical-scroll-bar;*/
-
-			::-webkit-scrollbar {
-			  -webkit-appearance: none;
-			  width: 7px;
-			}
-			::-webkit-scrollbar-thumb {
-			  border-radius: 4px;
-			  background-color: rgba(0, 0, 0, .5);
-			  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
-			}
-			}
-
-			@media (min-width:1281px) { 
-			/* hi-res laptops and desktops */ 
-			#map {
-				margin: 10px;
-				height: 500px;
-				width: 75%;
-				}
-			
-			#info {
-				font-family: 'Lato', helvetica, serif;
-				border: solid 1px;
-				border-color: #545454;
-				color: black;
-				margin: 10px;
-				background: #f7f7f7;
-				float: right;
-				width: 20%;
-				height: 500px;
-				overflow: auto;
-				padding: 15px;
-				}
-
-			::-webkit-scrollbar {
-			  -webkit-appearance: none;
-			  width: 7px;
-			}
-			::-webkit-scrollbar-thumb {
-			  border-radius: 4px;
-			  background-color: rgba(0, 0, 0, .5);
-			  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
-				}
-			}
-		</style>
 	</head>
 
 	<body>
@@ -245,10 +26,10 @@
 			</div>
 				
 			<div class="row">
-				<div id="info"></div>
 				<div id="map"></div>
+				<div id="info"></div>
+				
 				<!-- Create the table using data-->
-
 					<div class="table-responsive">
 						<table class="table table-hover">
 							<tr>
@@ -651,12 +432,21 @@
 
 				var map = L.map('map').setView([21, 78], 4);
 
-				var mapquestLayer = new L.TileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
-	                maxZoom: 18,
-	                attribution: 'Data, imagery and map information provided by <a href="http://open.mapquest.co.uk" target="_blank">MapQuest</a>,<a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors.',
-	                subdomains: ['otile1','otile2','otile3','otile4']
-	            });
+				var mapquestLayer = new L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', 
+					{
+						attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+						maxZoom: 18
+					});
 	            map.addLayer(mapquestLayer);
+
+				var geojsonMarkerOptions = {
+					            radius: 10,
+					            fillColor: "#ff7800",
+					            color: "#fff",
+					            weight: 1,
+					            opacity: .7,
+					            fillOpacity: 0.7
+					        };
 
 	            //GeoJSON with data taken from CSV
 	            var data = {
@@ -1297,13 +1087,17 @@
 
 	            //Show data on map
 	            var dataLayer = L.geoJson(data, {
+	            	pointToLayer: function (feature, latlng) {
+	            		return L.circleMarker(latlng, geojsonMarkerOptions);
+	            	},
+
 	                onEachFeature: function(feature, layer) {
 
 	                	//When marker is clicked, show info panel on the side
 	                	layer.on('click', function(event) {
 	                		$('#map').css('width', '75%');
-	                		$('#info').css('display', 'block')
-	                				.animate({'width': '20%'}, '1000')
+	                		$('#info').css('display', 'inline')
+	                				.animate({'width': '23%'}, '1000')
 	                				.html(feature.properties.report);
 	                	});
 	                	

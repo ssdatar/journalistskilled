@@ -1,0 +1,264 @@
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+	font-family: 'Lato', helvetica, serif;
+	background: #eee;
+}
+
+table {
+	margin: 20px;
+}
+
+td {
+	color: #696969;
+}
+
+span {
+	font-size: 15px;
+}
+
+#map {
+	margin: 10px;
+	height: 500px;
+	width: 75%;
+	min-width: 650px;
+	border: solid #545454 1px;
+	position: relative;
+	display: inline-block;
+}
+
+#info {
+	color: black;
+	background: #f7f7f7;
+	width: 20%;
+	height: 500px;
+	overflow: auto;
+	padding: 15px;
+	position: absolute;
+	right: 0;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) { 
+
+
+/*@media (min-width:320px) and (max-width: 480px) {*/
+
+.page-header h1 {
+	font-size: 25px;
+}
+
+p span {
+	font-size: 15px;
+}
+
+td {
+	font-size: 10px;
+}
+
+th {
+	font-size: 12px;
+}
+
+#map {
+	margin: 5px 5px 5px 0;
+	height: 300px;
+	width: 100%;
+	position: relative;
+	clear: both;
+}
+
+#info {
+	font-family: 'Lato', helvetica, serif;
+	color: black;
+	font-size: 8px;
+	margin: 5px;
+	background: #f7f7f7;
+	width: 20%;
+	height: 300px;
+	overflow: auto;
+	padding: 5px;
+	text-align: left;
+	position: absolute;
+
+	}
+}
+}
+@media (min-width:481px) { 
+	/* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+
+#map {
+	margin: 5px 5px 5px 0;
+	height: 300px;
+	width: 100%;
+	display: block;
+}
+
+#info {
+	font-family: 'Lato', helvetica, serif;
+	color: black;
+	font-size: 8px;
+	margin: 5px;
+	background: #f7f7f7;
+	width: 100%;
+	height: 300px;
+	overflow: auto;
+	padding: 5px;
+	text-align: center;
+	display: block;
+}
+
+span {
+	font-size: 12px;
+} 
+
+	}
+
+@media (min-width:641px) { 
+/* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ 
+
+#map {
+	margin: 10px;
+	height: 500px;
+	width: 75%;
+	}
+
+#info {
+	font-family: 'Lato', helvetica, serif;
+	color: black;
+	margin: 10px;
+	background: #f7f7f7;
+	float: right;
+	width: 20%;
+	height: 500px;
+	overflow: auto;
+	padding: 15px;
+	display: block;
+	}
+}
+
+@media (min-width:768px) { 
+/* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ 
+
+#map {
+	margin: 10px;
+	height: 500px;
+	width: 100%;
+	}
+
+#info {
+	font-family: 'Lato', helvetica, serif;
+	color: black;
+	margin: 10px;
+	background: #f7f7f7;
+	float: right;
+	width: 20%;
+	height: 500px;
+	overflow: auto;
+	padding: 15px;
+	display: block;
+	}
+}
+
+@media (min-width:961px) { 
+/* tablet, landscape iPad, lo-res laptops ands desktops */ 
+
+#map {
+	margin: 10px;
+	height: 500px;
+	width: 75%;
+	}
+
+#info {
+	font-family: 'Lato', helvetica, serif;
+	color: black;
+	margin: 10px;
+	background: #f7f7f7;
+	float: right;
+	width: 20%;
+	height: 500px;
+	overflow: auto;
+	padding: 15px;
+	}
+
+h1 {
+	font-size: 60px;
+}
+
+}
+
+@media (min-width:1025px) { 
+/* big landscape tablets, laptops, and desktops */ 
+
+#map {
+	margin: 10px;
+	height: 500px;
+	width: 75%;
+	}
+
+#info {
+	font-family: 'Lato', helvetica, serif;
+	border: solid 1px;
+	border-color: #545454;
+	color: black;
+	margin: 10px;
+	background: #f7f7f7;
+	float: right;
+	width: 20%;
+	height: 500px;
+	overflow: auto;
+	padding: 15px;
+	}
+
+h1 {
+	font-size: 60px;
+}
+
+/* Force OS X to show scrollbar: http://stackoverflow.com/questions/7492062/css-overflow-scroll-always-show-vertical-scroll-bar;*/
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, .5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+}
+
+@media (min-width:1281px) { 
+/* hi-res laptops and desktops */ 
+#map {
+	margin: 10px;
+	height: 500px;
+	width: 75%;
+	}
+
+#info {
+	font-family: 'Lato', helvetica, serif;
+	border: solid 1px;
+	border-color: #545454;
+	color: black;
+	margin: 10px;
+	background: #f7f7f7;
+	float: right;
+	width: 20%;
+	height: 500px;
+	overflow: auto;
+	padding: 15px;
+	}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, .5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+	}
+}

@@ -14,20 +14,45 @@
 
 		<!--Google font Lato -->
 		<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+
+		<!--D3 script-->
+		<script src="//d3js.org/d3.v3.min.js"></script>
 		
-		<title>Journalist deaths in India</title>
+		<title>Journalist Deaths in India</title>
 	</head>
 
 	<body>
 		<div class="container">
 			<div class="page-header">
-				<h1 class="text-center">Journalists killed in India </h1>			
-				<p> <span> According to the Committee to Protect of Journalists, 37 journalists have been killed in India since 1992, while they were performing their duties. This map shows where they were killed, the alleged killers, and the reason for death. Click on the markers on the map to know more details. </span></p>
+				<h1 class="text-center">Journalists killed in India </h1>
 			</div>
 				
 			<div class="row">
-				<div id="map"></div>
-				<div id="info"></div>
+				<article>
+					<p> There have been 37 journalist deaths in India since 1992, a 2015 report released by the Committee to Protect Journalists revealed. In most cases, the journalists were murdered in connection with their reporting on crime and politics. Others were killed while reporting in strife-torn regions of the country such as Kashmir and Assam.</p>
+
+					<p><strong>Political groups</strong> have been the alleged murderers of journalists the most number of times in India - killing 20 journalists. They shot the scribes dead, planted car bombs, or assaulted them with weapons.
+				</article>
+
+				<div id="killers"></div>
+
+				<article>
+					<p>The reporters have lost their lives the most in Jammu & Kashmir while covering the separatist movement in the conflict-torn state.</p>
+
+					<p>Andhra Pradesh has been the second-most dangerous state for journalists in India, with six deaths in total. Uttar Pradesh is third on this list.</p>
+				</article>
+
+				<div id="states"></div>
+
+				<article>
+					<p>The map below shows all the deaths, their reason, and the alleged killers. You can click on the dots to read the detailed story.</p>
+				</article>
+
+
+				<div class="map-wrapper clearfix">
+					<div id="map"></div>
+					<div id="info"></div>
+				</div>
 				
 				<!-- Create the table using data-->
 					<div class="table-responsive">
@@ -421,14 +446,15 @@
 			</div>
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 			<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+			<script src="../killer.js"></script>
 			<script type='text/javascript'>	
 
 				//Load when document is ready
 				$(document).ready(function() {	
 
 				//hide till a marker is clicked
-				$('#info').css('display', 'none')
-				$('#map').css('width', '100%');	// occupy full screen space	
+				// $('#info').css('display', 'none')
+				// $('#map').css('width', '100%');	// occupy full screen space	
 
 				var map = L.map('map').setView([21, 78], 4);
 
@@ -1091,14 +1117,34 @@
 	            		return L.circleMarker(latlng, geojsonMarkerOptions);
 	            	},
 
+	            	//Set style for each dot based on type of killer
+	            	style: function (feature, layer) {
+	            		var f = feature.properties.alleged_killer.toLowerCase();
+	            		f = f.replace(' ', '-');
+
+	            		if (f === 'Police/government') {
+	            			f = 'police-government';
+	            		}
+
+	            		return { className: f };
+
+	            	},
+
 	                onEachFeature: function(feature, layer) {
 
 	                	//When marker is clicked, show info panel on the side
 	                	layer.on('click', function(event) {
-	                		$('#map').css('width', '75%');
-	                		$('#info').css('display', 'inline')
-	                				.animate({'width': '23%'}, '1000')
-	                				.html(feature.properties.report);
+	                		
+	                		if (!$('#map').hasClass('panel-open')) {
+	                			$('#map').addClass('panel-open');
+	                		}
+
+	                		if(!$('#info').hasClass('panel-open')) {
+	                			$('#info').addClass('panel-open')
+	                		}
+
+	                		$('#info').html(feature.properties.report);
+
 	                	});
 	                	
 	                	//Info shown on map popup

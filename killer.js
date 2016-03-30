@@ -4,35 +4,35 @@ INITIALIZE SCALES, SIZES, MARGINS
 
 var margin = { top: 10, bottom: 10, left: 250, right: 40};
 var width = 900 - margin.left - margin.right;
-var height = 500 - margin.top - margin.bottom;
+var height = 350 - margin.top - margin.bottom;
 
 //X axis scale
 var xScale = d3.scale.linear()
-				.range([0, width]);
+               .range([0, width]);
 
 //Y axis scale
 var yScale = d3.scale.ordinal()
-				.rangeRoundBands([0, height]);
+               .rangeRoundBands([0, height]);
 
 var numTicks = 5;
 
 var xAxis = d3.svg.axis()
-			.scale(xScale)
-			.orient('bottom')
-			.tickSize(-height)
-			.ticks(numTicks);
+		.scale(xScale)
+		.orient('bottom')
+		.tickSize(-height)
+		.ticks(numTicks);
 
 var yAxis = d3.svg.axis()
-			.scale(yScale)
-			.orient('left');
+		.scale(yScale)
+		.orient('left');
 
 //Append main svg
 var svg = d3.select('#killers')
-			.append('svg')
-			.attr('width', width + margin.left + margin.right)
-			.attr('height', height)
-			.attr('class', 'main-svg')
-			.call(responsive)
+		.append('svg')
+		.attr('width', width + margin.left + margin.right)
+		.attr('height', height)
+		.attr('class', 'main-svg')
+		.call(responsive)
 
 var barGroup = svg.append('g')
 				.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
@@ -43,8 +43,6 @@ var x = barGroup.append('g')
 
 var y = barGroup.append('g')
 		.attr('class', 'y axis');
-
-var title = 'Alleged Killers of journalists killed in India';
 
 d3.csv('static/journalists_killed.csv', drawBarChart);
 
@@ -108,17 +106,25 @@ function drawBarChart (error, data) {
 					.attr('x', xScale(0))
 					.attr('y', function (d) { return yScale(d.key); });
 
+	//Numbers at the end of bars
 	group.append('text')
 		.attr('x', function (d) { return xScale(d.values.length); })
 		.attr('y', function (d) { return yScale(d.key); })
+		.attr('class', 'killer-text')
 		.text(function (d) { return d.values.length; })
 		.attr('text-anchor', 'end')
-		.attr("dy", "2em")
-        .attr("dx", "2em");
+		.attr("dy", "1.5em")
+        .attr("dx", "1.5em");
 
     // x.call(xAxis);
     y.call(yAxis);
 }
+
+/* ---------------------------- 
+MAKE CHART RESPONSIVE 
+------------------------------ */
+
+//http://jsfiddle.net/shawnbot/BJLe6/
 
 function responsive (svg) {
 	var container = d3.select(svg.node().parentNode);

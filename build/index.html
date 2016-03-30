@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 		<!--Bootstrap stylesheet-->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" />
@@ -22,29 +23,30 @@
 	</head>
 
 	<body>
-		<div class="container">
-			<div class="page-header">
-				<h1 class="text-center">Journalists killed in India </h1>
-			</div>
-				
+		<div class="container">				
 			<div class="row">
-				<article>
-					<p> There have been 37 journalist deaths in India since 1992, a 2015 report released by the Committee to Protect Journalists revealed. In most cases, the journalists were murdered in connection with their reporting on crime and politics. Others were killed while reporting in strife-torn regions of the country such as Kashmir and Assam.</p>
+				<article class="text">
+					<h1 class="text-center">37 journalists have died in India, since 1992</h1>
 
-					<p><strong>Political groups</strong> have been the alleged murderers of journalists the most number of times in India - killing 20 journalists. They shot the scribes dead, planted car bombs, or assaulted them with weapons.
-				</article>
+					<p> India has seen 37 journalists die in the line of duty since 1992, a 2015 report released by the Committee to Protect Journalists has revealed. The country stood ninth among the top ten deadliest countries for journalists.</p>
 
-				<div id="killers"></div>
+					<p>In most cases, the journalists were murdered in connection with their reporting on crime and politics. Others were killed while reporting in strife-torn regions of the country such as Kashmir and Assam.</p>
 
-				<article>
-					<p>The reporters have lost their lives the most in Jammu & Kashmir while covering the separatist movement in the conflict-torn state.</p>
+					<p><strong>Political groups</strong> have been the alleged murderers of journalists the most number of times in India - killing 20 journalists. They have shot the scribes dead, planted car bombs, or assaulted them with weapons.</p>
+				
 
-					<p>Andhra Pradesh has been the second-most dangerous state for journalists in India, with six deaths in total. Uttar Pradesh is third on this list.</p>
-				</article>
+					<div id="killers">
+						<h3 class="chart-title">Who has killed journalists in India?</h3>
+					</div>
+				
+					<p>The reporters have lost their lives the most in northern Jammu & Kashmir while covering the separatist movement in the conflict-torn state.</p>
 
-				<div id="states"></div>
+					<p>The southern state of Andhra Pradesh has been the second-most dangerous state for journalists in India, with six deaths in total. Uttar Pradesh, another state in the northwestern part of the country, is third on this list.</p>				
 
-				<article>
+					<div id="states">
+						<h3 class="chart-title">Most dangerous states for the press in India</h3>
+					</div>
+				
 					<p>The map below shows all the deaths, their reason, and the alleged killers. You can click on the dots to read the detailed story.</p>
 				</article>
 
@@ -440,13 +442,14 @@
 						</table>
 					</div>
 					<br>
-					<p> Source: <a href="https://www.cpj.org/killed/asia/india">Committee to Protect Journalists</a></p>
-					<small> Disclaimer: Locations are not exact since there is no record of exact latitudes and longitudes. Geocoding is according to the names of towns and villages in the data. </small>					
+					<p class="footnote"> Source: <a href="https://www.cpj.org/killed/asia/india">Committee to Protect Journalists</a></p>
+					<p class="footnote"> Disclaimer: Locations are not exact since there is no record of exact latitudes and longitudes. Geocoding is according to the names of towns and villages in the data. </p>					
 				</div>
 			</div>
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 			<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 			<script src="../killer.js"></script>
+			<script src="../states.js"></script>
 			<script type='text/javascript'>	
 
 				//Load when document is ready
@@ -1152,6 +1155,23 @@
 	                }
 	            });
 	            map.addLayer(dataLayer);
+
+	            var legend = L.control({position: 'bottomleft'});
+
+	            legend.onAdd = function (map) {
+	            	var div = L.DomUtil.create('div', 'info legend'),
+	            		killers = ['Political group', 'Police/government', 'Unknown',
+	            				   'Paramilitary group', 'Local residents', 'Government']
+	            		colors = ['#d62728','#1f77b4','#8c564b','#17becf','#e377c2','#bcbd22' ];
+
+	            	for (var i = 0; i < 6; i++) {
+	            		div.innerHTML += '<i style="background:' + colors[i] + '"></i> ' + killers[i] + '<br>';
+	            	}
+
+	            	return div;
+
+	            }
+	            legend.addTo(map);
 	        });
 		</script>		
 	</body>

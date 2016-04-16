@@ -31,7 +31,7 @@ var svg = d3.select('#killers')
 		.append('svg')
 		.attr('width', width + margin.left + margin.right)
 		.attr('height', height)
-		.attr('class', 'main-svg')
+		.attr('class', 'master-svg')
 		.call(responsive)
 
 var barGroup = svg.append('g')

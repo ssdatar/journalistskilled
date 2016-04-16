@@ -57,6 +57,7 @@ span {
 
 #map.panel-open {
 	width: 75%;
+	margin-left: 0;
 }
 
 #info.panel-open {

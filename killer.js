@@ -35,7 +35,7 @@ var svg = d3.select('#killers')
 		.call(responsive)
 
 var barGroup = svg.append('g')
-				.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+				.attr('transform', 'translate(200,' + margin.top + ')')
 				.attr('class', 'chart-svg');
 
 var x = barGroup.append('g')
@@ -128,6 +128,7 @@ MAKE CHART RESPONSIVE
 
 function responsive (svg) {
 	var container = d3.select(svg.node().parentNode);
+	//console.log(container)
 
 	width = parseInt(d3.select('#killers').style('width'), 10);
 	height = parseInt(d3.select('#killers').style('height'), 10);
@@ -141,7 +142,9 @@ function responsive (svg) {
     d3.select(window).on('resize', resize);
 
     function resize() {
+    	console.log('hello')
     	var targetWidth = parseInt(container.style("width"));
+    	//console.log(targetWidth)
         svg.attr("width", targetWidth);
         svg.attr("height", Math.round(targetWidth / aspectRatio));
     }

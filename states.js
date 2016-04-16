@@ -35,7 +35,7 @@ var svg1 = d3.select('#states')
 		.call(responsive)
 
 var barGroup1 = svg1.append('g')
-				.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+				.attr('transform', 'translate(200,' + margin.top + ')')
 				.attr('class', 'chart-svg');
 
 var x1 = barGroup1.append('g')

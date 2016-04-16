@@ -121,8 +121,8 @@ MAKE CHART RESPONSIVE
 function responsive (svg) {
 	var container = d3.select(svg.node().parentNode);
 
-	width1 = parseInt(d3.select('#killers').style('width'), 10);
-	height1 = parseInt(d3.select('#killers').style('height'), 10);
+	width1 = parseInt(d3.select('#states').style('width'), 10);
+	height1 = parseInt(d3.select('#states').style('height'), 10);
     
     var aspectRatio = width1 / height1;
 

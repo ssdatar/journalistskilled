@@ -2,17 +2,21 @@
 INITIALIZE SCALES, SIZES, MARGINS 
 ------------------------------ */
 
+var div = d3.select('#killers').node().getBoundingClientRect();
+
 var margin = { top: 10, bottom: 10, left: 250, right: 40};
-var width = 900 - margin.left - margin.right;
-var height = 350 - margin.top - margin.bottom;
+
+var width = div.width - margin.left - margin.right,
+	height = div.height - margin.top - margin.bottom,
+	innerPadding = 40;
 
 //X axis scale
 var xScale = d3.scale.linear()
-               .range([0, width]);
+           .range([0, width - innerPadding]);
 
 //Y axis scale
 var yScale = d3.scale.ordinal()
-               .rangeRoundBands([0, height]);
+            .rangeRoundBands([0, height - innerPadding], .5, .3);
 
 var numTicks = 5;
 
@@ -24,18 +28,20 @@ var xAxis = d3.svg.axis()
 
 var yAxis = d3.svg.axis()
 		.scale(yScale)
-		.orient('left');
+		.orient('left')
+		.tickFormat(function (d) { return ''; });
 
 //Append main svg
 var svg = d3.select('#killers')
 		.append('svg')
-		.attr('width', width + margin.left + margin.right)
-		.attr('height', height)
+		.attr("width", '100%')
+	    .attr("height", '100%')
+	    .attr('viewBox','0 0 '+ width + ' ' + height)
+	    .attr('preserveAspectRatio','xMinYMin')
 		.attr('class', 'master-svg')
-		.call(responsive)
 
 var barGroup = svg.append('g')
-				.attr('transform', 'translate(200,' + margin.top + ')')
+				.attr('transform', 'translate(50,' + margin.top + ')')
 				.attr('class', 'chart-svg');
 
 var x = barGroup.append('g')
@@ -98,54 +104,48 @@ function drawBarChart (error, data) {
 
 	//Append rects
 	var rects = group.attr('class', 'bars')
-					.append('rect')
-					.attr('width', 0)
-					.transition()
-					.attr('width', function (d) { return xScale(d.values.length); })
-					.attr('height', height / 10)
-					.attr('x', xScale(0))
-					.attr('y', function (d) { return yScale(d.key); });
+			.append('rect')
+			.attr('width', 0)
+			.transition()
+			.attr('width', function (d) { return xScale(d.values.length); })
+			.attr('height', yScale.rangeBand())
+			.attr('x', xScale(0))
+			.attr('y', function (d) { return yScale(d.key); });
 
 	//Numbers at the end of bars
 	group.append('text')
-		.attr('x', function (d) { return xScale(d.values.length); })
-		.attr('y', function (d) { return yScale(d.key); })
-		.attr('class', 'killer-text')
-		.text(function (d) { return d.values.length; })
-		.attr('text-anchor', 'end')
-		.attr("dy", "1.5em")
-        .attr("dx", "1.5em");
+	.attr('x', function (d) { return xScale(d.values.length); })
+	.attr('y', function (d) { return yScale(d.key); })
+	.attr('class', 'killer-text')
+	.text(function (d) { return d.values.length; })
+	.attr('text-anchor', 'end')
+	.attr("dy", "1em")
+    .attr("dx", "-.6em")
+    .attr("fill", "white");
+
+    group.append("text")
+    .attr("x", function(d, i){
+    	if (i === 1) {
+    		return xScale(d.values.length) - innerPadding;
+    	}
+    	return xScale(d.values.length) + 10;
+    })
+    .attr('y', function (d) { return yScale(d.key); })
+    .attr("class", "killer-name")
+    .text(function(d){ return d.key; })
+    .attr("dy", "1.1em")
+    //.attr("dx", "-.6em")
+    .attr("text-anchor", function(d, i) {
+    	if (i === 1) { return "end"; }
+    	return "start";
+    })
+    .attr("fill", function(d,i) {
+    	if (i === 1) {
+    		return "white";
+    	}
+    });
+
 
     // x.call(xAxis);
     y.call(yAxis);
-}
-
-/* ---------------------------- 
-MAKE CHART RESPONSIVE 
------------------------------- */
-
-//http://jsfiddle.net/shawnbot/BJLe6/
-
-function responsive (svg) {
-	var container = d3.select(svg.node().parentNode);
-	//console.log(container)
-
-	width = parseInt(d3.select('#killers').style('width'), 10);
-	height = parseInt(d3.select('#killers').style('height'), 10);
-    
-    var aspectRatio = width / height;
-
-    svg.attr("viewBox", "0 0 " + width + " " + height)
-            .attr("preserveAspectRatio", "xMinYMid")
-            .call(resize);
-
-    d3.select(window).on('resize', resize);
-
-    function resize() {
-    	console.log('hello')
-    	var targetWidth = parseInt(container.style("width"));
-    	//console.log(targetWidth)
-        svg.attr("width", targetWidth);
-        svg.attr("height", Math.round(targetWidth / aspectRatio));
-    }
 }

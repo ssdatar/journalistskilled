@@ -2,17 +2,21 @@
 INITIALIZE SCALES, SIZES, MARGINS 
 ------------------------------ */
 
+var div1 = d3.select('#states').node().getBoundingClientRect();
+
 var margin = { top: 10, bottom: 10, left: 250, right: 40};
-var width1 = 900 - margin.left - margin.right;
-var height1 = 400 - margin.top - margin.bottom;
+
+var width1 = div1.width - margin.left - margin.right,
+	height1 = div1.height - margin.top - margin.bottom,
+	innerPadding = 40;
 
 //X axis scale
 var xScale1 = d3.scale.linear()
-               .range([0, width1]);
+               .range([0, width1 - innerPadding]);
 
 //Y axis scale
 var yScale1 = d3.scale.ordinal()
-               .rangeRoundBands([0, height1]);
+               .rangeRoundBands([0, height1 - innerPadding], .1, .1);
 
 var numTicks = 5;
 
@@ -24,18 +28,21 @@ var xAxis1 = d3.svg.axis()
 
 var yAxis1 = d3.svg.axis()
 		.scale(yScale1)
-		.orient('left');
+		.orient('left')
+		.tickFormat(function (d) { return ''; });
 
 //Append main svg
 var svg1 = d3.select('#states')
 		.append('svg')
-		.attr('width', width1 + margin.left + margin.right)
-		.attr('height', height1)
+		.attr('width', "100%")
+		.attr('height', "100%")
+		.attr('viewBox','0 0 '+ width1 + ' ' + height1)
+	    .attr('preserveAspectRatio','xMinYMin')
 		.attr('class', 'main-svg')
-		.call(responsive)
+		//.call(responsive)
 
 var barGroup1 = svg1.append('g')
-				.attr('transform', 'translate(200,' + margin.top + ')')
+				.attr('transform', 'translate(50,' + margin.top + ')')
 				.attr('class', 'chart-svg');
 
 var x1 = barGroup1.append('g')
@@ -57,8 +64,6 @@ function draw (error, data) {
 		console.error(error);
 		throw error;
 	}
-
-	//console.log(data)
 
 	// Find number of deaths in each state
 	var groupByStates = d3.nest()
@@ -90,13 +95,13 @@ function draw (error, data) {
 
 	//Append rects
 	var rects = group.attr('class', 'bar')
-					.append('rect')
-					.attr('width', 0)
-					.transition()
-					.attr('width', function (d) { return xScale1(d.values.length); })
-					.attr('height', height / 20)
-					.attr('x', xScale1(0))
-					.attr('y', function (d) { return yScale1(d.key); });
+			.append('rect')
+			.attr('width', 0)
+			.transition()
+			.attr('width', function (d) { return xScale1(d.values.length); })
+			.attr('height', yScale1.rangeBand())
+			.attr('x', xScale1(0))
+			.attr('y', function (d) { return yScale1(d.key); });
 
 	//Numbers at the end of bars
 	group.append('text')
@@ -105,36 +110,23 @@ function draw (error, data) {
 		.attr('class', 'state-text')
 		.text(function (d) { return d.values.length; })
 		.attr('text-anchor', 'end')
-		.attr("dy", "1em")
-        .attr("dx", "1.1em");
+		.attr("dy", "1.2em")
+    .attr("dx", "-.8em")
+    .attr("fill", "white");
 
-    // x1.call(xAxis1);
+   group.append("text")
+   .attr("x", function(d, i) {
+   	if (i === 0) {
+   		return xScale1(d.values.length) - 200;
+   	}
+   	return xScale1(d.values.length) + 20;
+   })
+   .attr('y', function (d) { return yScale1(d.key); })
+   .attr('class', 'state-name')
+   .attr("dy", "1.3em")
+   .attr("dx", "-.8em")
+   .text(function(d){ return d.key; })
+   .attr("text-anchor", "start");
+
     y1.call(yAxis1);
-}
-
-/* ---------------------------- 
-MAKE CHART RESPONSIVE 
------------------------------- */
-
-//http://jsfiddle.net/shawnbot/BJLe6/
-
-function responsive (svg) {
-	var container = d3.select(svg.node().parentNode);
-
-	width1 = parseInt(d3.select('#states').style('width'), 10);
-	height1 = parseInt(d3.select('#states').style('height'), 10);
-    
-    var aspectRatio = width1 / height1;
-
-    svg.attr("viewBox", "0 0 " + width1 + " " + height1)
-            .attr("preserveAspectRatio", "xMinYMid")
-            .call(resize);
-
-    d3.select(window).on('resize', resize);
-
-    function resize() {
-    	var targetwidth1 = parseInt(container.style("width"));
-        svg.attr("width", targetwidth1);
-        svg.attr("height", Math.round(targetwidth1 / aspectRatio));
-    }
 }

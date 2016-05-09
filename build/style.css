@@ -32,6 +32,15 @@ span {
 	font-size: 15px;
 }
 
+#states {
+	height: 500px;
+}
+
+#killers {
+	height: 400px;
+	margin-bottom: 1.2em;
+}
+
 #map {
 	height: 500px;
 	width: 100%;
@@ -150,6 +159,43 @@ h1.text-center {
 	margin-bottom: 1.5em;
 }
 
+@media only screen and (max-width: 640px) {
+	#map {
+		width: 100%;
+		float: none;
+	}
+
+	#info {
+		width:100%;
+		margin: 20px 0;
+		height: auto;
+		float: none;
+	}
+
+	#map.panel-open {
+		width: 100%;
+	}
+
+	#info.panel-open {
+		width: 100%;
+		display: block;
+		height: auto;
+	}
+
+	h3.chart-title {
+		font-size: 18px;
+	}
+
+	#states {
+		height: 400px;
+		margin-bottom: .6em;
+	}
+
+	#killers {
+		height: 300px;
+	}
+}
+
 
 @media only screen and (max-width: 480px) {
 	#map {
@@ -176,5 +222,14 @@ h1.text-center {
 
 	h3.chart-title {
 		font-size: 18px;
+	}
+
+	#states {
+		height: 300px;
+		margin-bottom: .6em;
+	}
+
+	#killers {
+		height: 200px;
 	}
 }
